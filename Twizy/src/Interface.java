@@ -42,13 +42,12 @@ public class Interface extends JFrame {
 	private JPanel contentPane;
 	private JTextField imgFile;
 	private JTextArea panneau;
-	private JTextArea panneau_2;
-	private JTextArea panneau_3;
-	private JPanel panel_0;
-	private JPanel panel_1 ;
+	private JTextArea texte2;
+	private JTextArea texte3;
+	private JPanel panel1 ;
 	private String path;
-	private static JPanel panel_2 ;
-	private static JPanel panel_3;
+	private static JPanel panel2 ;
+	
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -78,15 +77,15 @@ public class Interface extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		panel_1 = new JPanel();
-		panel_1.setBackground(Color.lightGray);
-		panel_1.setBounds(274, 46, 880, 582); //emplacement image analysée
-		panel.add(panel_1);
+		panel1 = new JPanel();
+		panel1.setBackground(Color.lightGray);
+		panel1.setBounds(274, 46, 880, 582); //emplacement image analysée
+		panel.add(panel1);
 		
-		panel_2 = new JPanel();
-		panel_2.setBackground(Color.lightGray);
-		panel_2.setBounds(10, 240, 254, 254); //emplacement panneau detecte methode1
-		panel.add(panel_2);
+		panel2 = new JPanel();
+		panel2.setBackground(Color.lightGray);
+		panel2.setBounds(10, 240, 254, 254); //emplacement panneau detecte methode1
+		panel.add(panel2);
 		path="";
 		JButton btnChargerImage = new JButton("Charger une image");
 		btnChargerImage.addActionListener(new ActionListener() {
@@ -107,9 +106,9 @@ public class Interface extends JFrame {
 				}
 				System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 				Mat m=Highgui.imread(path,Highgui.CV_LOAD_IMAGE_COLOR);
-				panel_1.removeAll();
-				panel_1.repaint();
-				panel_1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(m))));
+				panel1.removeAll();
+				panel1.repaint();
+				panel1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(m))));
 				validate();
 			}
 		});
@@ -125,25 +124,25 @@ public class Interface extends JFrame {
 				//Conversion du panneau extrait de l'image en gris et normalisation et redimensionnement à la taille du panneau de réference
 				Mat grayObject = new Mat(m.rows(), m.cols(), m.type());
 				Imgproc.cvtColor(m, grayObject, Imgproc.COLOR_BGRA2GRAY);
-				panel_1.removeAll();
-				panel_1.repaint();
-				panel_1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(grayObject))));
+				panel1.removeAll();
+				panel1.repaint();
+				panel1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(grayObject))));
 				validate();
 			}
 		});
 		btnNiveauGris.setBounds(274, 10, 150, 20);
 		panel.add(btnNiveauGris);
 		
-		JButton btnButtonHSV = new JButton("Domaine HSV");
+		JButton btnButtonHSV = new JButton("HSV");
 		btnButtonHSV.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
 				Mat imageOriginale=Highgui.imread(path,Highgui.CV_LOAD_IMAGE_COLOR);
 				Mat imageTransformee=Bibliotheque.transformeBGRversHSV(imageOriginale);
-				panel_1.removeAll();
-				panel_1.repaint();
-				panel_1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(imageTransformee))));
+				panel1.removeAll();
+				panel1.repaint();
+				panel1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(imageTransformee))));
 				validate();
 			}
 		});
@@ -158,9 +157,9 @@ public class Interface extends JFrame {
 				Mat imageOriginale=Highgui.imread(path,Highgui.CV_LOAD_IMAGE_COLOR);
 				Mat imageTransformee=Bibliotheque.transformeBGRversHSV(imageOriginale);
 				Mat imageSaturee=Bibliotheque.seuillage(imageTransformee, 6, 170, 110);
-				panel_1.removeAll();
-				panel_1.repaint();
-				panel_1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(imageSaturee))));
+				panel1.removeAll();
+				panel1.repaint();
+				panel1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(imageSaturee))));
 				validate();
 			}
 		});
@@ -193,9 +192,9 @@ public class Interface extends JFrame {
 					Scalar color = new Scalar( rand.nextInt(255 - 0 + 1) , rand.nextInt(255 - 0 + 1),rand.nextInt(255 - 0 + 1) );
 					Imgproc.drawContours( drawing, contours, i, color, 1, 8, hierarchy, 0, new Point() );
 				}
-				panel_1.removeAll();
-				panel_1.repaint();
-				panel_1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(drawing))));
+				panel1.removeAll();
+				panel1.repaint();
+				panel1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(drawing))));
 				validate();
 
 			}
@@ -208,22 +207,22 @@ public class Interface extends JFrame {
 		panel.add(panneau);
 		panneau.setColumns(10);
 		
-		panneau_2 = new JTextArea();
-		panneau_2.setBounds(10, 520, 254, 20);
-		panel.add(panneau_2);
-		panneau_2.setColumns(10);
+		texte2 = new JTextArea();
+		texte2.setBounds(10, 520, 254, 20);
+		panel.add(texte2);
+		texte2.setColumns(10);
 		
-		panneau_3 = new JTextArea();
-		panneau_3.setBounds(10, 540, 254, 20);
-		panel.add(panneau_3);
-		panneau_3.setColumns(10);
+		texte3 = new JTextArea();
+		texte3.setBounds(10, 540, 254, 20);
+		panel.add(texte3);
+		texte3.setColumns(10);
 		
-		JButton btnMatching = new JButton("Detection methode 1");
+		JButton btnMatching = new JButton("Detection méthode matching");
 		btnMatching.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panneau.setText("");
-				panneau_3.setText("");
-				panneau_2.setText("");
+				texte3.setText("");
+				texte2.setText("");
 				String fileImg = "";
 				//Ouverture de l'image et saturation des rouges
 				System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -262,61 +261,61 @@ public class Interface extends JFrame {
 						case 0:
 							nb=nb+1;
 							if (nb==1) {
-							panneau.setText("Panneau 30 détecté par la méthode 1");}
+							panneau.setText("Panneau 30 détecté par la méthode matching");}
 							if (nb==2) {
-								panneau_2.setText("Panneau 30 détecté par la méthode 1");}
+								texte2.setText("Panneau 30 détecté par la méthode matching");}
 							if (nb==3) {
-								panneau_3.setText("Panneau 30 détecté par la méthode 1");}
+								texte3.setText("Panneau 30 détecté par la méthode matching");}
 							fileImg="ref30.jpg";
 							break;
 						case 1:
 							nb=nb+1;
 							if (nb==1) {
-								panneau.setText("Panneau 50 détecté par la méthode 1");}
+								panneau.setText("Panneau 50 détecté par la méthode matching");}
 							if (nb==2) {
-									panneau_2.setText("Panneau 50 détecté par la méthode 1");}
+									texte2.setText("Panneau 50 détecté par la méthode matching");}
 							if (nb==3) {
-									panneau_3.setText("Panneau 50 détecté par la méthode 1");}
+									texte3.setText("Panneau 50 détecté par la méthode matching");}
 							fileImg="ref50.jpg";
 							break;
 						case 2:
 							nb=nb+1;
 							if (nb==1) {
-								panneau.setText("Panneau 70 détecté par la méthode 1");}
+								panneau.setText("Panneau 70 détecté par la méthode matching");}
 							if (nb==2) {
-									panneau_2.setText("Panneau 70 détecté par la méthode 1");}
+									texte2.setText("Panneau 70 détecté par la méthode matching");}
 							if (nb==3) {
-									panneau_3.setText("Panneau 70 détecté par la méthode 1");}
+									texte3.setText("Panneau 70 détecté par la méthode matching");}
 							fileImg="ref70.jpg";
 							break;
 						case 3:
 							nb=nb+1;
 							if (nb==1) {
-								panneau.setText("Panneau 90 détecté par la méthode 1");}
+								panneau.setText("Panneau 90 détecté par la méthode matching");}
 								if (nb==2) {
-									panneau_2.setText("Panneau 90 détecté par la méthode 1");}
+									texte2.setText("Panneau 90 détecté par la méthode matching");}
 								if (nb==3) {
-									panneau_3.setText("Panneau 90 détecté par la méthode 1");}
+									texte3.setText("Panneau 90 détecté par la méthode matching");}
 							fileImg="ref90.jpg";
 							break;
 						case 4:
 							nb=nb+1;
 							if (nb==1) {
-								panneau.setText("Panneau 110 détecté par la méthode 1");}
+								panneau.setText("Panneau 110 détecté par la méthode matching");}
 								if (nb==2) {
-									panneau_2.setText("Panneau 110 détecté par la méthode 1");}
+									texte2.setText("Panneau 110 détecté par la méthode matching");}
 								if (nb==3) {
-									panneau_3.setText("Panneau 110 détecté par la méthode 1");}
+									texte3.setText("Panneau 110 détecté par la méthode matching");}
 							fileImg="ref110.jpg";
 							break;
 						case 5:
 							nb=nb+1;
 							if (nb==1) {
-							panneau.setText("Panneau interdiction de dépasser détecté par la méthode 1");}
+							panneau.setText("Panneau interdiction de dépasser détecté par la méthode matching");}
 							if (nb==2) {
-								panneau_2.setText("Panneau interdiction de dépasser détecté par la méthode 1");}
+								texte2.setText("Panneau interdiction de dépasser détecté par la méthode matching");}
 							if (nb==3) {
-								panneau_3.setText("Panneau interdiction de dépasser détecté par la méthode 1");}
+								texte3.setText("Panneau interdiction de dépasser détecté par la méthode matching");}
 							fileImg="refdouble.jpg";
 							break;
 						}
@@ -326,9 +325,12 @@ public class Interface extends JFrame {
 					
 				}
 				ImageIcon IMAGE = new ImageIcon(Toolkit.getDefaultToolkit().createImage(fileImg));
-				panel_2.removeAll();
-				panel_2.repaint();
-				panel_2.add(new JLabel(IMAGE));
+				panel2.removeAll();
+				panel2.repaint();
+				panel2.add(new JLabel(IMAGE));
+				panel1.removeAll();
+				panel1.repaint();
+				panel1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(m))));
 				validate();	
 			}
 		}
@@ -337,13 +339,13 @@ public class Interface extends JFrame {
 		panel.add(btnMatching);
 		
 		
-		JButton btnMatching2 = new JButton("Detection méthode 2");
+		JButton btnMatching2 = new JButton("Detection méthode XOR");
 		btnMatching2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String fileImg = "";
 				panneau.setText("");
-				panneau_3.setText("");
-				panneau_2.setText("");
+				texte3.setText("");
+				texte2.setText("");
 				//Ouverture de l'image et saturation des rouges
 				System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 				Mat m=Highgui.imread(path,Highgui.CV_LOAD_IMAGE_COLOR);
@@ -381,61 +383,61 @@ public class Interface extends JFrame {
 						case 0:
 							nb=nb+1;
 							if (nb==1) {
-							panneau.setText("Panneau 30 détecté par la méthode 2");}
+							panneau.setText("Panneau 30 détecté par la méthode XOR");}
 							if (nb==2) {
-								panneau_2.setText("Panneau 30 détecté par la méthode 2");}
+								texte2.setText("Panneau 30 détecté par la méthode XOR");}
 							if (nb==3) {
-								panneau_3.setText("Panneau 30 détecté par la méthode 2");}
+								texte3.setText("Panneau 30 détecté par la méthode XOR");}
 							fileImg="ref30.jpg";
 							break;
 						case 1:
 							nb=nb+1;
 							if (nb==1) {
-								panneau.setText("Panneau 50 détecté par la méthode 2");}
+								panneau.setText("Panneau 50 détecté par la méthode XOR");}
 							if (nb==2) {
-									panneau_2.setText("Panneau 50 détecté par la méthode 2");}
+									texte2.setText("Panneau 50 détecté par la méthode XOR");}
 							if (nb==3) {
-									panneau_3.setText("Panneau 50 détecté par la méthode 2");}
+									texte3.setText("Panneau 50 détecté par la méthode XOR");}
 							fileImg="ref50.jpg";
 							break;
 						case 2:
 							nb=nb+1;
 							if (nb==1) {
-								panneau.setText("Panneau 70 détecté par la méthode 2");}
+								panneau.setText("Panneau 70 détecté par la méthode XOR");}
 							if (nb==2) {
-									panneau_2.setText("Panneau 70 détecté par la méthode 2");}
+									texte2.setText("Panneau 70 détecté par la méthode XOR");}
 							if (nb==3) {
-									panneau_3.setText("Panneau 70 détecté par la méthode 2");}
+									texte3.setText("Panneau 70 détecté par la méthode XOR");}
 							fileImg="ref70.jpg";
 							break;
 						case 3:
 							nb=nb+1;
 							if (nb==1) {
-								panneau.setText("Panneau 90 détecté par la méthode 2");}
+								panneau.setText("Panneau 90 détecté par la méthode XOR");}
 								if (nb==2) {
-									panneau_2.setText("Panneau 90 détecté par la méthode 2");}
+									texte2.setText("Panneau 90 détecté par la méthode XOR");}
 								if (nb==3) {
-									panneau_3.setText("Panneau 90 détecté par la méthode 2");}
+									texte3.setText("Panneau 90 détecté par la méthode XOR");}
 							fileImg="ref90.jpg";
 							break;
 						case 4:
 							nb=nb+1;
 							if (nb==1) {
-								panneau.setText("Panneau 110 détecté par la méthode 2");}
+								panneau.setText("Panneau 110 détecté par la méthode XOR");}
 								if (nb==2) {
-									panneau_2.setText("Panneau 110 détecté par la méthode 2");}
+									texte2.setText("Panneau 110 détecté par la méthode XOR");}
 								if (nb==3) {
-									panneau_3.setText("Panneau 110 détecté par la méthode 2");}
+									texte3.setText("Panneau 110 détecté par la méthode XOR");}
 							fileImg="ref110.jpg";
 							break;
 						case 5:
 							nb=nb+1;
 							if (nb==1) {
-							panneau.setText("Panneau interdiction de dépasser détecté par la méthode 2");}
+							panneau.setText("Panneau interdiction de dépasser détecté par la méthode XOR");}
 							if (nb==2) {
-								panneau_2.setText("Panneau interdiction de dépasser détecté par la méthode 2");}
+								texte2.setText("Panneau interdiction de dépasser détecté par la méthode XOR");}
 							if (nb==3) {
-								panneau_3.setText("Panneau interdiction de dépasser détecté par la méthode 2");}
+								texte3.setText("Panneau interdiction de dépasser détecté par la méthode XOR");}
 							fileImg="refdouble.jpg";
 							break;
 						}
@@ -445,9 +447,12 @@ public class Interface extends JFrame {
 					
 				}
 				ImageIcon IMAGE = new ImageIcon(Toolkit.getDefaultToolkit().createImage(fileImg));
-				panel_2.removeAll();
-				panel_2.repaint();
-				panel_2.add(new JLabel(IMAGE));
+				panel2.removeAll();
+				panel2.repaint();
+				panel2.add(new JLabel(IMAGE));
+				panel1.removeAll();
+				panel1.repaint();
+				panel1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(m))));
 				validate();	
 			}
 		}
@@ -456,13 +461,13 @@ public class Interface extends JFrame {
 		btnMatching2.setBounds(35, 170, 200, 20);
 		panel.add(btnMatching2);
 
-		JButton btnMatching3 = new JButton("Detection méthode 3");
+		JButton btnMatching3 = new JButton("Detection méthode OCR");
 		btnMatching3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String fileImg1 = "";
 				panneau.setText("");
-				panneau_3.setText("");
-				panneau_2.setText("");
+				texte3.setText("");
+				texte2.setText("");
 				//Ouverture de l'image et saturation des rouges
 				System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 				Mat m=Highgui.imread(path,Highgui.CV_LOAD_IMAGE_COLOR);
@@ -485,24 +490,24 @@ public class Interface extends JFrame {
 						/*Mat transformation = Preparation.transformation(objetrond);
 						Function.afficheImage("Differents panneaux", transformation);*/
 						System.out.println(value);
-						if (value.contains("70")|| value.contains("7o")) {
-							panneau.setText("Panneau 70 détecté par la méthode 3");
+						if (value.contains("70")|| value.contains("7o") || value.contains("7O")) {
+							panneau.setText("Panneau 70 détecté par la méthode OCR");
 							fileImg1="ref70.jpg";
 						}
 						if (value.contains("90") || value.contains("9o")) {
-							panneau.setText("Panneau 90 détecté par la méthode 3");
+							panneau.setText("Panneau 90 détecté par la méthode OCR");
 							fileImg1="ref90.jpg";
 						}
 						if (value.contains("30")|| value.contains("3o")) {
-							panneau.setText("Panneau 30 détecté par la méthode 3");
+							panneau.setText("Panneau 30 détecté par la méthode OCR");
 							fileImg1="ref30.jpg";
 						}
 						if (value.contains("50") || value.contains("5o")) {
-							panneau.setText("Panneau 50 détecté par la méthode 3");
+							panneau.setText("Panneau 50 détecté par la méthode OCR");
 							fileImg1="ref50.jpg";
 						}
 						if (value.contains("110") || value.contains("11o")) {
-							panneau.setText("Panneau 110 détecté par la méthode 3");
+							panneau.setText("Panneau 110 détecté par la méthode OCR");
 							fileImg1="ref110.jpg";
 						}
 						/*switch(value) {
@@ -531,10 +536,13 @@ public class Interface extends JFrame {
 					}
 				}
 				ImageIcon IMAGE1 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(fileImg1));
-				panel_2.removeAll();
-				panel_2.repaint();
-				panel_2.add(new JLabel(IMAGE1));
-				validate();	
+				panel2.removeAll();
+				panel2.repaint();
+				panel2.add(new JLabel(IMAGE1));
+				panel1.removeAll();
+				panel1.repaint();
+				panel1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(m))));
+				validate();
 			
 			}
 		}
@@ -563,9 +571,9 @@ public class Interface extends JFrame {
 					else if(result==JFileChooser.CANCEL_OPTION){
 						System.out.println("No File Select");
 					}
-					//LectureVideo(pathvideo,panneau,panel_1);
+					//LectureVideo(pathvideo,panneau,panel1);
 					System.load("C:\\Users\\STAGIAIRE\\Downloads\\opencv\\build\\x64\\vc14\\bin\\opencv_ffmpeg2413_64.dll");
-					MyThread thread = new MyThread(pathvideo,panneau,panel_1);
+					MyThread thread = new MyThread(pathvideo,panneau,panel1);
 					thread.start();}
 			});
 		 btnVideo.setBounds(10, 70, 200, 20);
@@ -573,7 +581,7 @@ public class Interface extends JFrame {
 	}
 	
 	
-	public static void LectureVideo(String nomVideo, JTextArea panneau, JPanel panel_1 ) {
+	public static void LectureVideo(String nomVideo, JTextArea panneau, JPanel panel1 ) {
 		System.load("C:\\Users\\STAGIAIRE\\Downloads\\opencv\\build\\x64\\vc14\\bin\\opencv_ffmpeg2413_64.dll");
 		Mat frame = new Mat();
 		VideoCapture camera = new VideoCapture(nomVideo);
@@ -587,12 +595,12 @@ public class Interface extends JFrame {
 			}*/
 			String fileImg = "";
 
-			panel_1.removeAll();
+			panel1.removeAll();
 
 			
-			panel_1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(frame))));
-			panel_1.repaint();
-			panel_1.validate();
+			panel1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(frame))));
+			panel1.repaint();
+			panel1.validate();
 
 
 			Mat transformee=Bibliotheque.transformeBGRversHSV(frame);
@@ -606,10 +614,10 @@ public class Interface extends JFrame {
 				objetrond=Bibliotheque.DetectForm(frame,contour);
 				indexmax=Bibliotheque.identifiepanneau(objetrond);
 				if (indexmax>-1) {
-					panel_1.removeAll();
-					panel_1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(frame))));
-					panel_1.repaint();
-					panel_1.validate();
+					panel1.removeAll();
+					panel1.add(new JLabel(new ImageIcon(Bibliotheque.Mat2bufferedImage(frame))));
+					panel1.repaint();
+					panel1.validate();
 				}
 				switch(indexmax){
 				case -1:
@@ -646,10 +654,10 @@ public class Interface extends JFrame {
 			
 			
 			
-			panel_2.removeAll();
-			panel_2.repaint();
-			panel_2.add(new JLabel(new ImageIcon(fileImg)));
-			panel_2.validate();	
+			panel2.removeAll();
+			panel2.repaint();
+			panel2.add(new JLabel(new ImageIcon(fileImg)));
+			panel2.validate();	
 		}
 	}
 	

@@ -339,9 +339,6 @@ public class Bibliotheque {
 		//Imgproc.resize(grayObject, grayObject, graySign.size());	
 		
 		
-		
-		
-		//à compléter...
 		Mat mat=new Mat();
 		Core.bitwise_xor(grayObject,graySign,mat);
 		int score=0;
